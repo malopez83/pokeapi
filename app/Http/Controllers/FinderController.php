@@ -14,25 +14,33 @@ class FinderController extends Controller
 
     public function index(Request $request) 
     {
-        if($request->input('search')){
-            return view('finder', ['pokemons' => $this->search($request->input('search'))]);
-        } else {
-            return view('finder', ['pokemons' => $this->getPokemons()]);
-        }
+        return view('finder', ['pokemons' => $this->getPokemons($request->input('search'))]);
     }
 
-    public function search($termToSearch)
+    private function getPokemons($search)
     {
-        $pokemonsAPI = $this->getPokemonsAPI(true);
+        $all = $search ? true : false;
+        $pokemonsAPI = $this->getPokemonsAPI($all);
         $pokemonsAPI = $pokemonsAPI['results'];
 
-        $matches = array_filter($pokemonsAPI, function($var) use ($termToSearch) { return stristr($var['name'], $termToSearch); });
+        if($search) {
+            $pokemonsAPI = array_filter($pokemonsAPI, function($var) use ($search) { return stristr($var['name'], $search); });
+        }        
 
+        $pokemonsAPI = $this->addPicture($pokemonsAPI);
+
+        return $pokemonsAPI;        
+    }
+
+    private function addPicture($arr)
+    {
         $pokemons = [];
-
-        foreach ($matches as $poke) 
+        foreach ($arr as $poke) 
         {
-            $poke['picture'] = $this->getPicture($poke);
+            $pokeURL = Http::get($poke['url']);
+            $pokeURL->json();
+
+            $poke['picture'] = $pokeURL['sprites']['front_default'];
 
             $pokemons[] = $poke;
         }
@@ -53,30 +61,5 @@ class FinderController extends Controller
         $result = Http::get($url);
 
         return $result->json();
-    }
-
-    private function getPokemons()
-    {
-        $pokemonsAPI = $this->getPokemonsAPI();
-        $pokemonsAPI = $pokemonsAPI['results'];
-
-        $pokemons = [];
-
-        foreach ($pokemonsAPI as $poke) 
-        {
-            $poke['picture'] = $this->getPicture($poke);
-
-            $pokemons[] = $poke;
-        }
-
-        return $pokemons;
-    }
-
-    private function getPicture($poke)
-    {
-        $pokeURL = Http::get($poke['url']);
-        $pokeURL->json();
-
-        return $pokeURL['sprites']['front_default'];
     }
 }
