@@ -14,7 +14,10 @@ class FinderController extends Controller
 
     public function index(Request $request) 
     {
-        return view('finder', ['pokemons' => $this->getPokemons($request->input('search'))]);
+        return view('finder', [
+            'pokemons' => $this->getPokemons($request->input('search')),
+            'inputSearch' => $request->input('search')
+        ]);
     }
 
     private function getPokemons($search)
