@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
+use Illuminate\Support\Facades\Http;
 
 class PokemonTest extends TestCase
 {
@@ -14,7 +15,7 @@ class PokemonTest extends TestCase
      */
     public function search_pokemon()
     {
-        $this->visit('/')
+        $this->get('/')
             ->type('Bulbasaur', 'search')
             ->press('Buscar')
             ->get('/')
