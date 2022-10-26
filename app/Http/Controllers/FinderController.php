@@ -13,7 +13,11 @@ class FinderController extends Controller
      */
 
     public function index(Request $request) 
-    {
+    {        
+        $request->validate([
+            'search' => 'min:3'
+        ]);
+
         return view('finder', [
             'pokemons' => $this->getPokemons($request->input('search')),
             'inputSearch' => $request->input('search')
