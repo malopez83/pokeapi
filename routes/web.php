@@ -15,4 +15,3 @@ use App\Http\Controllers\FinderController;
 */
 
 Route::get('/', [FinderController::class, 'index']);
-Route::get('/search',  [FinderController::class, 'search']);

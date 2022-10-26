@@ -11,7 +11,7 @@
     <title>Pokemon finder</title>
   </head>
   <body>
-    <div class="container">
+    <div class="container mb-5">
         <div class="row">
             <div class="col">
                 <h1>Pokemon finder</h1>
@@ -46,7 +46,7 @@
             <div class="col">
                 <img src="{{ $pokemon['picture'] }}" alt="{{ ucfirst($pokemon['name']) }}" class="img-thumbnail">
             </div>
-            <div class="col-10">
+            <div class="col-10 pt-3">
                 <p class="font-weight-bold">{{ ucfirst($pokemon['name']) }}</p>                
             </div>          
         </div>
