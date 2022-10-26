@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col mt-4">
                 <form action="/" method="GET">
                     <div class="form-group">
                         <div class="input-group mb-3">                            
@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="row">            
-            <div class="col">
+            <div class="col mt-4">
                 @if ($inputSearch)
                 <h3>Resultados de la búsqueda para <strong>"{{ $inputSearch }}"</strong></h3>
                 @else
@@ -42,15 +42,23 @@
             </div>
         </div>
         @foreach ($pokemons as $pokemon)
-        <div class="row">
+        <div class="row mt-3">
             <div class="col">
                 <img src="{{ $pokemon['picture'] }}" alt="{{ ucfirst($pokemon['name']) }}" class="img-thumbnail">
             </div>
             <div class="col-10">
-                {{ ucfirst($pokemon['name']) }}
-            </div>            
+                <p class="font-weight-bold">{{ ucfirst($pokemon['name']) }}</p>                
+            </div>          
         </div>
         @endforeach
+        <div class="row mt-5 pt-3 border-top">
+            <div class="col">Hecho por Marcos Agustín López</div>
+            <div class="col">
+                <a href="https://github.com/malopez83/pokeapi/" target="_blank" class="float-right">
+                    <button type="button" class="btn btn-primary">Link a mi repo</button>
+                </a>
+            </div>
+        </div>
     </div>
 
     <!-- Optional JavaScript -->

@@ -58,7 +58,7 @@ class FinderController extends Controller
         if($all) {
             $url = $urlAPI.'?limit=100000&offset=0';
         } else {
-            $url = $urlAPI;
+            $url = $urlAPI.'?limit=10';
         }
         
         $result = Http::get($url);
